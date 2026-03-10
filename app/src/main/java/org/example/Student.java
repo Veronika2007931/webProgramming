@@ -1,24 +1,54 @@
-package main.java.org.example;
+package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Student {
-    public String firstName; 
-    public String lastName;
-    public String group;
-    public int age;
+    private String firstName; 
+    private String lastName;
+    private String group;
+    private int age;
 
     public Student(String firstName, String lastName, String group, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.group = group;
-        this.age = age;
+        setFirstName(firstName);
+        setlastName(lastName);
+        setGroup(group);
+        setAge(age);
     }
     
     Scanner scanner = new Scanner(System.in);
     public List<Double> grades = new ArrayList<>();
     public List<Subject> subjects = new ArrayList<>();
+
+    public int getAge(){
+        return this.age;
+    }
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+     public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){
+        return this.firstName;
+    }
+    public void setlastName(String lastName){
+        this.lastName = lastName;
+    }
+      public String getGroup(){
+        return this.group;
+    }
+    public void setGroup(String Group){
+        this.group = group;
+    }
+
+    public void setAge(int age){
+        if(age>0 && age < 20){
+            this.age=age;
+        }else{
+            System.out.println("Некоректний вік!");
+        }
+    }
 
     public void addSubject(Subject subject){
         subjects.add(subject);
@@ -30,7 +60,7 @@ public class Student {
             System.out.println("Студент ще не обрав жодного предмету.");
         } else {
             for (Subject s : subjects) {
-                System.out.println("- " + s.title);
+                System.out.println("- " + s.getName());
             }
         }
     }
@@ -62,5 +92,23 @@ public class Student {
         }
         double score = total / grades.size();
         System.out.println("Середній бал: " + score);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        return age == student.age &&
+        java.util.Objects.equals(firstName,student.getFirstName())&&
+         java.util.Objects.equals(lastName,student.getLastName())&&
+         java.util.Objects.equals(group, student.getGroup());
+    }
+
+    @Override
+    public int hashCode(){
+        return java.util.Objects.hash(firstName, lastName, group, age);
     }
 }

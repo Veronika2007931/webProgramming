@@ -1,10 +1,6 @@
 package org.example;
 import java.util.Scanner;
 
-import javax.security.auth.Subject;
-
-import main.java.org.example.Student;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +13,8 @@ public static void main(String[] args) {
     System.out.println(new App().getGreeting());
      Scanner scanner = new Scanner(System.in);
 
-Subject math = new Subject("Математика", 120);
-        Subject english = new Subject("Англійська мова", 90);
+        Subject math = new Subject("Математика", 120);
+        Subject english = new Subject("Англійська", 100);
         Subject history = new Subject("Історія України", 60);
         Subject biology = new Subject("Біологія", 60);
         Subject ukrainian = new Subject("Українська мова", 100);
@@ -50,7 +46,7 @@ Subject math = new Subject("Математика", 120);
             s.addSubject(english);
             
             // Наприклад, додамо історію тільки 11-м класам
-            if (s.group.contains("11")) {
+            if (s.getGroup().contains("11")) {
                 s.addSubject(history);
             } else {
                 s.addSubject(biology);
@@ -60,7 +56,7 @@ Subject math = new Subject("Математика", 120);
        
         System.out.println("Список студентів школи:");
         for (Student s : school) {
-            System.out.println(s.firstName + " " + s.lastName + " (" + s.group + ")");
+            System.out.println(s.getFirstName() + " " + s.getLastName() + " (" + s.getGroup() + ")");
         }
 
     
