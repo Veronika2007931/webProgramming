@@ -51,7 +51,11 @@ public class Student {
     }
 
     public void addSubject(Subject subject){
-        subjects.add(subject);
+        if(subjects.contains(subject)){
+            System.out.println("Помилка: предмет '" + subject.getName() + "' вже додано раніше!");
+        }else{
+            subjects.add(subject);
+        }
     }
 
     public void printMySubjects() {
