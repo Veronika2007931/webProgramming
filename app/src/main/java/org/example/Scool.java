@@ -3,11 +3,11 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-class Scool{
+class School{
     private String Name;
     private String Location;
 
-     public Scool(String Name, String Location){
+     public School(String Name, String Location){
         setName(Name);
         setLocation(Location);
         

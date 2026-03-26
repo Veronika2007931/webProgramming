@@ -1,9 +1,21 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.AfterEach; // Додаємо цей імпорт
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class StudentTest {
+private final InputStream systemInBackup = System.in;
+
+@AfterEach
+    void restoreSystemIn() {
+        System.setIn(systemInBackup);
+    }
+
     @Test
     void invalidAgeTest(){
         Student s = new Student("Veronika", "Niema", "11-A", 16);
@@ -56,6 +68,30 @@ public class StudentTest {
 
     assertEquals(3, s.subjects.size(), "Має бути 3 унікальних предмети");
     
+}
+
+@ParameterizedTest
+@ValueSource(strings = {"Тест з математики", "Тест з історії", "Тест з біології", "Тест з англійської"})
+void writeTest(String testName){
+    Student s = new Student("Veronika", "Niema", "11-A", 16);
+    String input =  testName + "\n";
+    System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+    assertDoesNotThrow(()-> s.writeTest());
+  
+}
+
+@Test
+void AverageScore(){
+    Student s = new Student("Veronika", "Niema", "11-A", 16);
+
+    s.grades.add(12d);
+    s.grades.add(10d);
+    s.grades.add(10d);
+    s.grades.add(9d);
+
+    assertDoesNotThrow(()-> s.averageScore());
+
 }
 
 }
