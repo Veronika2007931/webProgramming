@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 public class DataService {
     
-    public void exportstudents(List<Student> students, String fileName) throws IOException{
+    public void exportStudents(List<Student> students, String fileName) throws IOException{
         students.sort(Comparator.comparing(Student::getLastName));
 
         try(PrintWriter writer = new PrintWriter(new FileWriter(fileName))){
@@ -38,5 +38,7 @@ public class DataService {
       
         }
       }
+
+      return importedList;
     }
 }
