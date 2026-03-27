@@ -23,6 +23,13 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -39,5 +46,8 @@ application {
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+test {
     useJUnitPlatform()
 }

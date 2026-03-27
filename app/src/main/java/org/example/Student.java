@@ -116,6 +116,11 @@ public class Student {
         return java.util.Objects.hash(firstName, lastName, group, age);
     }
 
+
+    public String toCsvRow(){
+        return firstName + "," + lastName + "," + group + "," + age;
+    }
+
     
     
 }
