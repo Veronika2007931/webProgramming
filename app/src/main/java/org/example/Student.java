@@ -20,17 +20,16 @@ public class Student {
     public List<Double> grades = new ArrayList<>();
     public List<Subject> subjects = new ArrayList<>();
 
-    public int getAge(){
-        return this.age;
+   
+    
+     public String getFirstName(){
+        return this.firstName;
     }
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
-     public String getFirstName(){
-        return this.firstName;
-    }
     public String getLastName(){
-        return this.firstName;
+        return this.lastName;
     }
     public void setlastName(String lastName){
         this.lastName = lastName;
@@ -39,7 +38,10 @@ public class Student {
         return this.group;
     }
     public void setGroup(String Group){
-        this.group = group;
+        this.group = Group;
+    }
+     public int getAge(){
+        return this.age;
     }
 
     public void setAge(int age){

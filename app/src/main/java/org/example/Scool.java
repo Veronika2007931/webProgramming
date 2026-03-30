@@ -38,4 +38,19 @@ public void setLocation(String location){
         }
     }
 
+    public List<Subject> allSubjects = new ArrayList<>();
+
+   
+    public void addSubject(Subject subject) {
+        this.allSubjects.add(subject);
     }
+
+public Student findStudent(String fName, String lName){
+ for(Student s : students){
+  if(s.getFirstName().equalsIgnoreCase(fName)&&
+  s.getLastName().equalsIgnoreCase(lName)){
+    return s;
+  }
+ }
+ return null;
+} }

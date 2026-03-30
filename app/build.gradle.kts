@@ -16,20 +16,18 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
+   
     testImplementation(libs.junit.jupiter)
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
     implementation(libs.guava)
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    // Додаткові бібліотеки для тестів (JUnit 5) 
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
-
-    testImplementation 'org.mockito:mockito-core:5.5.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+    // Mockito 
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.5.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -44,10 +42,18 @@ application {
     mainClass = "org.example.App"
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
+
+tasks.test {
     useJUnitPlatform()
+
+    testLogging {
+       
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+    }
 }
-test {
-    useJUnitPlatform()
+
+tasks.run {
+    standardInput = System.`in`
 }
+

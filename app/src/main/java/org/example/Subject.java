@@ -13,15 +13,15 @@ package org.example;
     public String getName(){
         return this.Name;
     }
-    public void setName(String Name){
-        this.Name = Name;
+    public void setName(String name){
+        this.Name = name;
     }
 
      public int getHours(){
         return this.Hours;
     }
-     public void setHours(int Housrs){
-        this.Hours = Hours;
+     public void setHours(int hours){
+        this.Hours = hours;
     }
 
     @Override
