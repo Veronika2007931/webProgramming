@@ -11,62 +11,6 @@ public static void main(String[] args) {
 
         boolean running = true;
 
-while (running) {
-    System.out.println("\n--- МЕНЮ ---");
-    System.out.println("Переглянути інформацію про школу(1)");
-    System.out.println("Особистий кабінет учня(2)");
-    System.out.println("Інформація про предмети(3)");
-    System.out.println("Вихід(0)"); 
-    
-    int choice = scanner.nextInt();
-    scanner.nextLine(); 
-
-    if (choice == 1) {
-        System.out.println(String.format("Назва школи: %s", school.getName()));
-        System.out.println(String.format("Адреса школи: %s", school.getLocation()));
-        System.out.println("Список учнів (4)");
-        int Schoolchoice = scanner.nextInt();
-        if (Schoolchoice == 4) {
-            school.StudentsList();
-        }
-    } else if (choice == 2) {
-        System.out.print("Введіть ваше ім'я: ");
-        String inputName = scanner.next();
-        System.out.print("Введіть ваше прізвище: ");
-        String inputLastName = scanner.next();
-
-        System.out.println("DEBUG: Шукаю [" + inputName + "] [" + inputLastName + "]");
-
-        Student foundStudent = school.findStudent(inputName, inputLastName);
-        if (foundStudent != null) {
-            System.out.println("\n--- ОСОБИСТИЙ КАБІНЕТ ---");
-            System.out.println("Вітаємо, " + foundStudent.getFirstName() + "!");
-            System.out.println("Ваша група: " + foundStudent.getGroup());
-            System.out.println("Ваш вік: " + foundStudent.getAge());
-            
-            System.out.print("Ваші предмети: ");
-            for (Subject sub : foundStudent.subjects) {
-                System.out.print(sub.getName() + " ");
-            }
-            System.out.println();
-        } else {
-            System.out.println("Помилка: Студента з таким ім'ям не знайдено у базі.");
-        }
-    } else if (choice == 3) {
-        System.out.println("Який предмет бажаєте подивитись");
-        String subjectChoosen = scanner.next();
-
-        for (Subject s : school.allSubjects) {
-            if (s.getName().equalsIgnoreCase(subjectChoosen)) {
-                System.out.println("Знайдено: " + s.getName() + ", години: " + s.getHours());
-            }
-        }
-    } else if (choice == 0) {
-        running = false; 
-        System.out.println("Вихід з програми...");
-    }
-}
-      
         school.addStudent(new Student("Вероніка", "Мельник", "10-А", 16));
         school.addStudent(new Student("Олександр", "Шевченко", "10-А", 16));
         school.addStudent(new Student("Дмитро", "Козак", "10-Б", 15));
@@ -109,6 +53,62 @@ while (running) {
             }
         }
 
+
+while (running) {
+    System.out.println("\n--- МЕНЮ ---");
+    System.out.println("Переглянути інформацію про школу(1)");
+    System.out.println("Особистий кабінет учня(2)");
+    System.out.println("Інформація про предмети(3)");
+    System.out.println("Вихід(0)"); 
+    
+    int choice = scanner.nextInt();
+    scanner.nextLine(); 
+
+    if (choice == 1) {
+        System.out.println(String.format("Назва школи: %s", school.getName()));
+        System.out.println(String.format("Адреса школи: %s", school.getLocation()));
+        System.out.println("Список учнів (4)");
+        int Schoolchoice = scanner.nextInt();
+        if (Schoolchoice == 4) {
+            school.StudentsList();
+        }
+    } else if (choice == 2) {
+        System.out.print("Введіть ваше ім'я: ");
+        String inputName = scanner.next();
+        System.out.print("Введіть ваше прізвище: ");
+        String inputLastName = scanner.next();
+
+        Student foundStudent = school.findStudent(inputName, inputLastName);
+        if (foundStudent != null) {
+            System.out.println("\n--- ОСОБИСТИЙ КАБІНЕТ ---");
+            System.out.println("Вітаємо, " + foundStudent.getFirstName() + "!");
+            System.out.println("Ваша група: " + foundStudent.getGroup());
+            System.out.println("Ваш вік: " + foundStudent.getAge());
+            
+            System.out.print("Ваші предмети: ");
+            for (Subject sub : foundStudent.subjects) {
+                System.out.print(sub.getName() + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("Помилка: Студента з таким ім'ям не знайдено у базі.");
+        }
+    } else if (choice == 3) {
+        System.out.println("Який предмет бажаєте подивитись");
+        String subjectChoosen = scanner.next();
+
+        for (Subject s : school.allSubjects) {
+            if (s.getName().equalsIgnoreCase(subjectChoosen)) {
+                System.out.println("Знайдено: " + s.getName() + ", години: " + s.getHours());
+            }
+        }
+    } else if (choice == 0) {
+        running = false; 
+        System.out.println("Вихід з програми...");
+    }
+}
+      
+        
        
        
 
