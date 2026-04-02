@@ -1,4 +1,6 @@
 package org.example;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -53,6 +55,15 @@ public static void main(String[] args) {
             }
         }
 
+        DataService dataService = new DataService();
+        try {
+    List<Student> savedData = dataService.importStudents("students.csv");
+    school.setStudents(savedData);
+    System.out.println("Дані успішно завантажені з минулої сесії.");
+} catch (IOException e) {
+    System.out.println("Файл бази даних не знайдено, починаємо з порожнім списком.");
+}
+
 
 while (running) {
     System.out.println("\n--- МЕНЮ ---");
@@ -103,6 +114,13 @@ while (running) {
             }
         }
     } else if (choice == 0) {
+        try {
+            
+            dataService.exportStudents(school.getStudents(), "students.csv");
+            System.out.println("Дані автоматично збережені!");
+        } catch (IOException e) {
+            System.out.println("Помилка при збереженні: " + e.getMessage());
+        }
         running = false; 
         System.out.println("Вихід з програми...");
     }
@@ -120,3 +138,4 @@ while (running) {
 }
 
 //./gradlew run
+// ./gradlew test

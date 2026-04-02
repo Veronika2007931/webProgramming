@@ -27,6 +27,10 @@ public void setName(String name){
 public void setLocation(String location){
     this.Location = location;
 }
+
+public List<Student> getStudents() {
+    return this.students;
+}
     List<Student> students = new ArrayList<>();
     
     public void addStudent(Student student) {
@@ -44,6 +48,10 @@ public void setLocation(String location){
     public void addSubject(Subject subject) {
         this.allSubjects.add(subject);
     }
+
+    public void setStudents(List<Student> students) {
+    this.students = students;
+}
 
 public Student findStudent(String fName, String lName){
  for(Student s : students){
