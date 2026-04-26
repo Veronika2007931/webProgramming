@@ -13,7 +13,7 @@ class School {
 
     }
 
-    public List<Subject> allSubjects = new ArrayList<>();
+    public List<Subject> subjects = new ArrayList<>();
     List<Student> students = new ArrayList<>();
 
     public String getName() {
@@ -36,6 +36,10 @@ class School {
         return this.students;
     }
 
+    public List<Subject> getSubjects() {
+        return this.subjects;
+    }
+
     public void addStudent(Student student) {
         if (students.contains(student)) {
             throw new IllegalArgumentException("Студент " + student.getFirstName() + " вже існує в базі!");
@@ -51,14 +55,18 @@ class School {
     }
 
     public void addSubject(Subject subject) {
-        if (allSubjects.contains(subject)) {
+        if (subjects.contains(subject)) {
             throw new IllegalArgumentException("Предмет " + subject.getName() + " вже існує в базі!");
         }
-        this.allSubjects.add(subject);
+        this.subjects.add(subject);
     }
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 
     public Student findStudent(String fName, String lName) {

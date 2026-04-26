@@ -48,23 +48,27 @@ public class App {
         School school = new School("КПІ ліцей", "бульвар Вацлава Гавела, 41А, Київ, 03124");
         DataService dataService = new DataService();
         boolean running = true;
-        String fileName = "students.csv";
+        String studentsFile = "students.csv";
+        String subjectsFile = "subjects.csv";
 
-        Subject math = new Subject("Математика", 120);
-        Subject english = new Subject("Англійська", 100);
-        Subject history = new Subject("Історія України", 60);
-        Subject biology = new Subject("Біологія", 60);
-        Subject ukrainian = new Subject("Українська мова", 100);
+        // Subject math = new Subject("Математика", 120);
+        // Subject english = new Subject("Англійська", 100);
+        // Subject history = new Subject("Історія України", 60);
+        // Subject biology = new Subject("Біологія", 60);
+        // Subject ukrainian = new Subject("Українська мова", 100);
 
-        school.addSubject(math);
-        school.addSubject(history);
-        school.addSubject(english);
-        school.addSubject(biology);
-        school.addSubject(ukrainian);
+        // school.addSubject(math);
+        // school.addSubject(history);
+        // school.addSubject(english);
+        // school.addSubject(biology);
+        // school.addSubject(ukrainian);
 
         try {
             List<Student> savedData = dataService.importStudents("students.csv");
             school.setStudents(savedData);
+
+            List<Subject> loadedSubjects = dataService.importSubjects(subjectsFile);
+            school.setSubjects(loadedSubjects);
             System.out.println("Дані успішно завантажені з минулої сесії.");
         } catch (IOException e) {
             System.out.println("Файл бази даних не знайдено, починаємо з порожнім списком.");
@@ -114,7 +118,7 @@ public class App {
                 System.out.println("Який предмет бажаєте подивитись");
                 String subjectChoosen = scanner.next();
 
-                for (Subject s : school.allSubjects) {
+                for (Subject s : school.subjects) {
                     if (s.getName().equalsIgnoreCase(subjectChoosen)) {
                         System.out.println("Знайдено: " + s.getName() + ", години: " + s.getHours());
                     }
@@ -135,13 +139,14 @@ public class App {
             } else if (choice == 0) {
                 try {
 
-                    dataService.exportStudents(school.getStudents(), fileName);
+                    dataService.exportStudents(school.getStudents(), studentsFile);
+                    dataService.exportSubjects(school.getSubjects(), subjectsFile);
                     System.out.println("Дані автоматично збережені!");
                 } catch (IOException e) {
                     System.out.println("Помилка при збереженні: " + e.getMessage());
                 }
                 running = false;
-                System.out.println("Вихід з програми...");
+
             }
         }
 
