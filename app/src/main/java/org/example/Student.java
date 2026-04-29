@@ -65,6 +65,14 @@ public class Student {
         }
     }
 
+    public void addGrade(Double grade) {
+        if (grades.isEmpty()) {
+            throw new IllegalArgumentException("Оцінок ще немає!");
+        } else {
+            grades.add(grade);
+        }
+    }
+
     public String printMySubjects() {
         if (subjects.isEmpty()) {
             System.out.println("Студент ще не обрав жодного предмету.");
@@ -75,6 +83,21 @@ public class Student {
 
         for (Subject s : subjects) {
             sb.append("-").append(s.getName()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String getGradesReport() {
+        if (grades.isEmpty()) {
+            return "Оцінок поки що немає.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ваші оцінки ").append(":\n");
+
+        for (Double grade : grades) {
+            sb.append(" - ").append(grade).append("\n");
         }
 
         return sb.toString();
@@ -98,7 +121,7 @@ public class Student {
 
     public double averageScore() {
         if (grades.isEmpty()) {
-            return 0.0;
+            throw new IllegalArgumentException("Оцінок ще немає!");
         }
         double total = 0;
         for (Double grade : grades) {

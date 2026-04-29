@@ -80,6 +80,7 @@ public class App {
             System.out.println("Особистий кабінет учня(2)");
             System.out.println("Інформація про предмети(3)");
             System.out.println("Акаунт адміністратора(4)");
+            System.out.println("Акаунт викладача(5)");
             System.out.println("Вихід(0)");
 
             int choice = scanner.nextInt();
@@ -110,7 +111,14 @@ public class App {
                     for (Subject sub : foundStudent.subjects) {
                         System.out.print(sub.getName() + " ");
                     }
-                    System.out.println();
+                    System.out.println("Обрахувати середній бал(1)");
+                    System.out.println("Написати тест(2)");
+                    int studentChoice = scanner.nextInt();
+                    if (studentChoice == 1) {
+                        foundStudent.getGradesReport();
+                        foundStudent.averageScore();
+                    }
+
                 } else {
                     System.out.println("Помилка: Студента з таким ім'ям не знайдено у базі.");
                 }
@@ -135,6 +143,35 @@ public class App {
                 } else if (adminChoice == 2) {
                     createAndAddSubject(scanner, school);
                 }
+
+            } else if (choice == 4) {
+                System.out.println("Оберіть дію");
+                System.out.println("Поставити оцінку(1)");
+                int teacherChoice = scanner.nextInt();
+                scanner.nextLine();
+
+                if (teacherChoice == 1) {
+                    System.out.print("Введіть ім'я студента: ");
+                    String inputName = scanner.next();
+                    System.out.print("Введіть прізвище студента: ");
+                    String inputLastName = scanner.next();
+
+                    try {
+                        Student foundStudent = school.findStudent(inputName, inputLastName);
+                        if (foundStudent == null) {
+                            throw new IllegalArgumentException("Студента з таким ім'ям не знайдено!");
+                        }
+
+                        System.out.print("Введіть оцінку яку ви хочете поставити: ");
+                        Double mark = scanner.nextDouble();
+
+                        foundStudent.addGrade(mark);
+
+                        System.out.println("✅ Оцінку " + mark + " для студента " + inputName + " успішно додано!");
+                    } catch (Exception e) {
+                        System.out.println("❌ Помилка: " + e.getMessage());
+                    };
+               
 
             } else if (choice == 0) {
                 try {
