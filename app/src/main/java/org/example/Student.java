@@ -10,6 +10,11 @@ public class Student {
     private String group;
     private int age;
 
+    public static final double MIN_GRADE = 1.0;
+    public static final double MAX_GRADE = 12.0;
+    public static final int MAX_STUDENT_AGE = 20;
+    public static final int MIN_STUDENT_AGE = 0;
+
     public Student(String firstName, String lastName, String group, int age) {
         setFirstName(firstName);
         setlastName(lastName);
@@ -50,10 +55,11 @@ public class Student {
     }
 
     public void setAge(int age) {
-        if (age > 0 && age < 20) {
+        if (age > MIN_STUDENT_AGE && age < MAX_STUDENT_AGE) {
             this.age = age;
         } else {
-            throw new IllegalArgumentException("Вік має бути від 0 до 20 років!");
+            throw new IllegalArgumentException(
+                    "Вік має бути від" + MAX_STUDENT_AGE + "до" + MIN_STUDENT_AGE + "років!");
         }
     }
 
@@ -66,8 +72,8 @@ public class Student {
     }
 
     public void addGrade(Double grade) {
-        if (grade < 1 || grade > 12) {
-            throw new IllegalArgumentException("Оцінка має бути від 1 до 12");
+        if (grade < MIN_GRADE || grade > MAX_GRADE) {
+            throw new IllegalArgumentException("Оцінка має бути від " + MIN_GRADE + " до " + MAX_GRADE);
         } else {
             grades.add(grade);
         }
@@ -75,7 +81,7 @@ public class Student {
 
     public String printMySubjects() {
         if (subjects.isEmpty()) {
-            System.out.println("Студент ще не обрав жодного предмету.");
+            return "Студент ще не має доданих предметів";
         }
 
         StringBuilder sb = new StringBuilder();

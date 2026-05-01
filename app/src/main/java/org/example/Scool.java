@@ -47,11 +47,13 @@ class School {
         students.add(student);
     }
 
-    public void StudentsList() {
+    public String StudentsList() {
         StringBuilder sb = new StringBuilder();
         for (Student student : students) {
             sb.append(student.getFirstName()).append(" ").append(student.getLastName()).append("\n");
         }
+        return sb.toString();
+
     }
 
     public void addSubject(Subject subject) {

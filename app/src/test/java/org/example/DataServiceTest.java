@@ -9,7 +9,7 @@ import java.util.List;
 public class DataServiceTest {
 
     @Test
-    void Export() throws IOException {
+    void Sort() throws IOException {
         DataService service = new DataService();
         List<Student> students = new ArrayList<>();
 
@@ -25,6 +25,23 @@ public class DataServiceTest {
         assertEquals("Яковенко", importedStudents.get(1).getLastName());
 
         new java.io.File(exportTestFileName).delete();
+    }
+
+    @Test
+    void Export() throws IOException {
+        DataService service = new DataService();
+        List<Student> students = new ArrayList<>();
+
+        students.add(new Student("Олег", "Яковенко", "ІП-21", 19));
+        students.add(new Student("Анна", "Абрамова", "ІП-21", 18));
+
+        String fileName = "export_test.csv";
+
+        service.exportStudents(students, fileName);
+        List<String> lines = java.nio.file.Files.readAllLines(java.nio.file.Paths.get(fileName));
+
+        assertEquals(2, lines.size());
+        new java.io.File(fileName).delete();
     }
 
     @Test
