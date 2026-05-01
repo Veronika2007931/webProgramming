@@ -170,23 +170,24 @@ public class App {
                         System.out.println("✅ Оцінку " + mark + " для студента " + inputName + " успішно додано!");
                     } catch (Exception e) {
                         System.out.println("❌ Помилка: " + e.getMessage());
-                    };
-               
+                    }
+                    ;
 
-            } else if (choice == 0) {
-                try {
+                } else if (choice == 0) {
+                    try {
 
-                    dataService.exportStudents(school.getStudents(), studentsFile);
-                    dataService.exportSubjects(school.getSubjects(), subjectsFile);
-                    System.out.println("Дані автоматично збережені!");
-                } catch (IOException e) {
-                    System.out.println("Помилка при збереженні: " + e.getMessage());
+                        dataService.exportStudents(school.getStudents(), studentsFile);
+                        dataService.exportSubjects(school.getSubjects(), subjectsFile);
+                        System.out.println("Дані автоматично збережені!");
+                    } catch (IOException e) {
+                        System.out.println("Помилка при збереженні: " + e.getMessage());
+                    }
+                    running = false;
+
                 }
-                running = false;
-
             }
-        }
 
+        }
     }
 }
 

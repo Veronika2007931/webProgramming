@@ -66,8 +66,8 @@ public class Student {
     }
 
     public void addGrade(Double grade) {
-        if (grades.isEmpty()) {
-            throw new IllegalArgumentException("Оцінок ще немає!");
+        if (grade < 1 || grade > 12) {
+            throw new IllegalArgumentException("Оцінка має бути від 1 до 12");
         } else {
             grades.add(grade);
         }

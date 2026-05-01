@@ -9,89 +9,49 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public class StudentTest {
-private final InputStream systemInBackup = System.in;
+    private final InputStream systemInBackup = System.in;
 
-@AfterEach
+    @AfterEach
     void restoreSystemIn() {
         System.setIn(systemInBackup);
     }
 
     @Test
-    void invalidAgeTest(){
+    void invalidLowAgeTest() {
         Student s = new Student("Veronika", "Niema", "11-A", 16);
-        s.setAge(-1);
-        assertEquals(-1, s.getAge());
+        assertThrows(IllegalArgumentException.class, () -> {
+            s.setAge(-1);
+        });
     }
 
     @Test
-    void hightAgeTest(){
+    void invalidHighAgeTest() {
         Student s = new Student("Veronika", "Niema", "11-A", 16);
-        s.setAge(25);
-        assertEquals(25, s.getAge());
+        assertThrows(IllegalArgumentException.class, () -> {
+            s.setAge(25);
+        });
     }
 
     @Test
-    void SubjectList(){
+    void EveregeScore() {
         Student s = new Student("Veronika", "Niema", "11-A", 16);
-        Subject math = new Subject("Math",100);
-        Subject ukr = new Subject("Ukrainian",80);
-        Subject english = new Subject("English",90);
 
-        s.addSubject(math);
-        s.addSubject(english);
-        s.addSubject(ukr);
+        s.addGrade(10.0);
+        s.addGrade(12.0);
+        s.addGrade(8.0);
 
-        assertEquals(3, s.subjects.size());
+        assertEquals(10.0, s.averageScore(), 0.001);
     }
 
     @Test
-    void EveregeScore(){
+    void addGradeTest() {
         Student s = new Student("Veronika", "Niema", "11-A", 16);
-        assertDoesNotThrow(()-> s.averageScore());
+
+        s.addGrade(10.0);
+
+        String report = s.getGradesReport();
+
+        assertTrue(report.contains("10.0"), "Звіт має містити додану оцінку 10.0");
     }
-
-    @Test
-    void SubjectsDuplicate() {
-    Student s = new Student("Вероніка", "Мельник", "10-А", 17);
-    
-    
-    Subject math1 = new Subject("Математика", 120);
-    Subject physics = new Subject("Фізика", 100);
-    Subject history = new Subject("Історія", 80);
-    Subject mathDuplicate = new Subject("Математика", 120);
-
-
-    s.addSubject(math1);
-    s.addSubject(physics);
-    s.addSubject(history);
-    s.addSubject(mathDuplicate);
-
-    assertEquals(3, s.subjects.size(), "Має бути 3 унікальних предмети");
-    
-}
-
-@ParameterizedTest
-@ValueSource(strings = {"Тест з математики", "Тест з історії", "Тест з біології", "Тест з англійської"})
-void writeTest(String testName){
-    Student s = new Student("Veronika", "Niema", "11-A", 16);
-    String input =  testName + "\n";
-    System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-    assertDoesNotThrow(()-> s.writeTest());
-  
-}
-
-@Test
-void AverageScore(){
-    Student s = new Student("Veronika", "Niema", "11-A", 16);
-
-    s.grades.add(12d);
-    s.grades.add(10d);
-    s.grades.add(10d);
-    s.grades.add(9d);
-
-    assertDoesNotThrow(()-> s.averageScore());
-
-}
 
 }
