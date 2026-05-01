@@ -115,8 +115,15 @@ public class App {
                     System.out.println("Написати тест(2)");
                     int studentChoice = scanner.nextInt();
                     if (studentChoice == 1) {
-                        foundStudent.getGradesReport();
-                        foundStudent.averageScore();
+                        try {
+
+                            System.out.println(foundStudent.getGradesReport());
+                            double average = foundStudent.averageScore();
+                            System.out.printf("Ваш середній бал: %.2f\n", average);
+                        } catch (IllegalArgumentException e) {
+
+                            System.out.println("Помилка: " + e.getMessage());
+                        }
                     }
 
                 } else {
@@ -167,9 +174,9 @@ public class App {
 
                         foundStudent.addGrade(mark);
 
-                        System.out.println("✅ Оцінку " + mark + " для студента " + inputName + " успішно додано!");
+                        System.out.println("Оцінку " + mark + " для студента " + inputName + " успішно додано!");
                     } catch (Exception e) {
-                        System.out.println("❌ Помилка: " + e.getMessage());
+                        System.out.println("Помилка: " + e.getMessage());
                     }
                     ;
 
