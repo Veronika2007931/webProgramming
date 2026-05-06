@@ -49,6 +49,7 @@ class School {
 
     public String StudentsList() {
         StringBuilder sb = new StringBuilder();
+
         for (Student student : students) {
             sb.append(student.getFirstName()).append(" ").append(student.getLastName()).append("\n");
         }
@@ -79,5 +80,31 @@ class School {
             }
         }
         return null;
+    }
+
+    public void addSubjectToGroup(String groupNumber, Subject subject) {
+        boolean found = false;
+        for (Student s : students) {
+            if (s.getGroup().equalsIgnoreCase(groupNumber)) {
+                s.addSubject(subject);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            throw new IllegalArgumentException("Групу '" + groupNumber + "' не знайдено серед студентів!");
+        }
+    }
+
+    public void removeSubject(String subjectName) {
+        boolean removed = subjects.removeIf(s -> s.getName().equalsIgnoreCase(subjectName));
+
+        if (!removed) {
+            throw new IllegalArgumentException("Предмет '" + subjectName + "' не знайдено в базі школи!");
+        }
+
+        for (Student student : students) {
+            student.subjects.removeIf(sub -> sub.getName().equalsIgnoreCase(subjectName));
+        }
     }
 }

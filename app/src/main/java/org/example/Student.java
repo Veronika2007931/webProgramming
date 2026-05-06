@@ -158,7 +158,22 @@ public class Student {
     }
 
     public String toCsvRow() {
-        return firstName + "," + lastName + "," + group + "," + age;
+        StringBuilder sb = new StringBuilder();
+        sb.append(firstName).append(",")
+                .append(lastName).append(",")
+                .append(group).append(",")
+                .append(age);
+
+        // Додаємо предмети, якщо вони є
+        if (!subjects.isEmpty()) {
+            sb.append(",");
+            for (int i = 0; i < subjects.size(); i++) {
+                sb.append(subjects.get(i).getName());
+                if (i < subjects.size() - 1)
+                    sb.append(";");
+            }
+        }
+        return sb.toString();
     }
 
 }

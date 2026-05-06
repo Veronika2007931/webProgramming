@@ -32,11 +32,19 @@ public class App {
         System.out.print("Кількість годин:");
         int hours = scaner.nextInt();
         scaner.nextLine();
+        System.out.print("Додати цей предмет усій групі? (Введіть назву групи або 'ні'): ");
+        String groupTarget = scaner.nextLine();
 
         try {
             Subject newSubject = new Subject(subName, hours);
             school.addSubject(newSubject);
-            System.out.println("Операція успішна!");
+
+            if (!groupTarget.equalsIgnoreCase("ні")) {
+                school.addSubjectToGroup(groupTarget, newSubject);
+                System.out.println("Предмет додано в школу та призначено групі " + groupTarget);
+            } else {
+                System.out.println("Предмет додано в загальний список школи.");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Помилка: " + e.getMessage());
         }
@@ -50,18 +58,6 @@ public class App {
         boolean running = true;
         String studentsFile = "students.csv";
         String subjectsFile = "subjects.csv";
-
-        // Subject math = new Subject("Математика", 120);
-        // Subject english = new Subject("Англійська", 100);
-        // Subject history = new Subject("Історія України", 60);
-        // Subject biology = new Subject("Біологія", 60);
-        // Subject ukrainian = new Subject("Українська мова", 100);
-
-        // school.addSubject(math);
-        // school.addSubject(history);
-        // school.addSubject(english);
-        // school.addSubject(biology);
-        // school.addSubject(ukrainian);
 
         try {
             List<Student> savedData = dataService.importStudents("students.csv");
@@ -92,7 +88,13 @@ public class App {
                 System.out.println("Список учнів (5)");
                 int Schoolchoice = scanner.nextInt();
                 if (Schoolchoice == 5) {
-                    school.StudentsList();
+                    if (school.getStudents().isEmpty()) {
+                        System.out.println("Помилка: база даних студентів порожня.");
+                    } else {
+                        String list = school.StudentsList();
+                        System.out.println(list);
+                    }
+
                 }
             } else if (choice == 2) {
                 System.out.print("Введіть ваше ім'я: ");
@@ -136,12 +138,15 @@ public class App {
                 for (Subject s : school.subjects) {
                     if (s.getName().equalsIgnoreCase(subjectChoosen)) {
                         System.out.println("Знайдено: " + s.getName() + ", години: " + s.getHours());
+                    } else {
+                        System.out.println("Помилка: Предмет знайдено у базі.");
                     }
                 }
             } else if (choice == 4) {
                 System.out.println("Оберіть дію");
                 System.out.println("Додати учня(1)");
                 System.out.println("Додати предмет(2)");
+                System.out.println("Видалити предмет(3)");
 
                 int adminChoice = scanner.nextInt();
                 scanner.nextLine();
@@ -149,9 +154,20 @@ public class App {
                     createAndAddStudent(scanner, school);
                 } else if (adminChoice == 2) {
                     createAndAddSubject(scanner, school);
+                } else if (adminChoice == 3) {
+
+                    System.out.print("Введіть назву предмета для видалення: ");
+                    String subToDelete = scanner.nextLine();
+
+                    try {
+                        school.removeSubject(subToDelete);
+                        System.out.println("Предмет '" + subToDelete + "' видалено з бази школи та у всіх учнів.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Помилка: " + e.getMessage());
+                    }
                 }
 
-            } else if (choice == 4) {
+            } else if (choice == 5) {
                 System.out.println("Оберіть дію");
                 System.out.println("Поставити оцінку(1)");
                 int teacherChoice = scanner.nextInt();
@@ -180,20 +196,20 @@ public class App {
                     }
                     ;
 
-                } else if (choice == 0) {
-                    try {
-
-                        dataService.exportStudents(school.getStudents(), studentsFile);
-                        dataService.exportSubjects(school.getSubjects(), subjectsFile);
-                        System.out.println("Дані автоматично збережені!");
-                    } catch (IOException e) {
-                        System.out.println("Помилка при збереженні: " + e.getMessage());
-                    }
-                    running = false;
-
                 }
-            }
 
+            } else if (choice == 0) {
+                try {
+
+                    dataService.exportStudents(school.getStudents(), studentsFile);
+                    dataService.exportSubjects(school.getSubjects(), subjectsFile);
+                    System.out.println("Дані автоматично збережені!");
+                } catch (IOException e) {
+                    System.out.println("Помилка при збереженні: " + e.getMessage());
+                }
+                running = false;
+
+            }
         }
     }
 }
